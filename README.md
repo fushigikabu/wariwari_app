@@ -1,24 +1,59 @@
-# README
+## usersテーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| name               | string | null: false |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
 
-Things you may want to cover:
+### Association
+- has_many :event_users
+- has_many :events, through: :event_users
+- has_many :moneys
 
-* Ruby version
+## eventsテーブル
 
-* System dependencies
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| name               | string | null: false |
 
-* Configuration
+### Association
+- has_many :event_users
+- has_many :users, through: :event_users
+- has_many :moneys
 
-* Database creation
+## event_users テーブル
 
-* Database initialization
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| user    | references | null: false, foreign_key: true |
+| event   | references | null: false, foreign_key: true |
 
-* How to run the test suite
+### Association
+- belongs_to :event
+- belongs_to :user
 
-* Services (job queues, cache servers, search engines, etc.)
+## moneys テーブル
 
-* Deployment instructions
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| pay     | integer    | null: false                    |
+| user    | references | null: false, foreign_key: true |
+| event   | references | null: false, foreign_key: true |
 
-* ...
+### Association
+- belongs_to :event
+- belongs_to :user
+
+## comments テーブル
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| content | string     | null: false                    |
+| user    | references | null: false, foreign_key: true |
+| event   | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :event
+- belongs_to :user
+
